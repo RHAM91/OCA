@@ -7,7 +7,7 @@
                 </div>
             </div>
             <footer>
-                Powered by SIA
+                Powered by SIA v{{version}}
             </footer>
         </div>
         <div class="cuadro2">
@@ -42,6 +42,9 @@
 
 <script>
 
+import { ipcRenderer } from 'electron'
+window.ipcRenderer = ipcRenderer
+
 import axios from 'axios'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import { minix } from '../components/functions/alertas'
@@ -51,7 +54,8 @@ export default {
     data(){
         return{
             usuario: '',
-            password: ''
+            password: '',
+            version: ''
         }
     },
     computed:{
@@ -92,10 +96,20 @@ export default {
         
             
         },
+        getVersion(){
+            ipcRenderer.send('app_version');
+            ipcRenderer.on('app_version', (event, arg) => {
+                ipcRenderer.removeAllListeners('app_version');
+                this.version = arg.version
+            });
+        },
         ...mapActions(['get_token']),
         ...mapMutations(['set_t2'])
    
-    }
+    },
+    mounted() {
+        this.getVersion()
+    },
 }
 </script>
 
