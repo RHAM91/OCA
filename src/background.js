@@ -17,6 +17,25 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+
+function buscarActualizacion(){
+    autoUpdater.checkForUpdates()
+    autoUpdater.on('update-downloaded', () => {
+     
+      const dialogOpts = {
+        type: 'info',
+        buttons: ['Actualizar', 'Después'],
+        title: 'Actualización disponible',
+        message: `NUEVA VERSION DISPONIBLE`,
+        detail: 'Una nueva versión ha sido descargada. Presiona "Actualizar" para aplicar los cambios.'
+      }
+
+      dialog.showMessageBox(dialogOpts).then(({ response }) => {
+        if (response === 0) autoUpdater.quitAndInstall()
+      })
+    })
+}
+
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
@@ -40,6 +59,7 @@ function createWindow() {
     win.loadURL('app://./index.html')
     //autoUpdater.checkForUpdatesAndNotify()
     //autoUpdater.checkForUpdates()
+    buscarActualizacion()
   }
 
   let actualizacion = setInterval(() => {
@@ -51,8 +71,8 @@ function createWindow() {
         type: 'info',
         buttons: ['Actualizar', 'Después'],
         title: 'Actualización disponible',
-        message: `Versión ${app.getVersion()} disponible`,
-        detail: 'Una nueva versión ha sido descargada. Presiona Actualizar para aplicar los cambios.'
+        message: `NUEVA VERSION DISPONIBLE`,
+        detail: 'Una nueva versión ha sido descargada. Presiona "Actualizar" para aplicar los cambios.'
       }
 
       dialog.showMessageBox(dialogOpts).then(({ response }) => {
@@ -63,7 +83,7 @@ function createWindow() {
         }
       })
     })
-  }, 60 * 60 * 1000) // para cambiar el tiempo del intervalo, modificar solo el primer 60
+  }, 60 * 60 * 1000) // para cambiar el tiempo del intervalo em minutos, modificar solo el primer 60
 
   win.on('closed', () => {
     win = null
