@@ -36,6 +36,7 @@
 import axios from 'axios'
 import { IP, PUERTO } from '@/config/parametros'
 import { mapState } from 'vuex'
+import { pregunta } from '../functions/alertas'
 
 const $ = require('jquery')
 window.$ = $
@@ -55,8 +56,13 @@ export default {
             this.$emit('establecermodulo', modulo)
         },
         salir(){
-            localStorage.removeItem('kat')
-            this.$router.replace('Login')
+            pregunta({titulo: 'Seguro que deseas salir?', texto: 'Está a punto de salir del sistema', afirmacion: 'Si, salir!'}, async (i) =>{
+
+                if (i) {
+                    localStorage.removeItem('kat')
+                    this.$router.replace('Login')
+                }
+            })
         }
     },
     mounted() {
