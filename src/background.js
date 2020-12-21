@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, dialog } from 'electron'
 import {
   createProtocol,
   installVueDevtools
@@ -38,9 +38,32 @@ function createWindow() {
     createProtocol('app')
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
-    autoUpdater.checkForUpdatesAndNotify()
+    //autoUpdater.checkForUpdatesAndNotify()
     //autoUpdater.checkForUpdates()
   }
+
+  let actualizacion = setInterval(() => {
+    autoUpdater.checkForUpdates()
+    autoUpdater.on('update-downloaded', () => {
+     
+
+      const dialogOpts = {
+        type: 'info',
+        buttons: ['Actualizar', 'Después'],
+        title: 'Actualización disponible',
+        message: `Versión ${app.getVersion()} disponible`,
+        detail: 'Una nueva versión ha sido descargada. Presiona Actualizar para aplicar los cambios.'
+      }
+
+      dialog.showMessageBox(dialogOpts).then(({ response }) => {
+        if (response === 0) {
+          autoUpdater.quitAndInstall()
+        }else{
+          clearInterval(actualizacion)
+        }
+      })
+    })
+  }, 60 * 60 * 1000) // para cambiar el tiempo del intervalo, modificar solo el primer 60
 
   win.on('closed', () => {
     win = null
