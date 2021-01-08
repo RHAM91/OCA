@@ -28,6 +28,10 @@
                <div class="link" @click="salir"><i class="fas fa-sign-out-alt"></i>Salir</div>
            </li>
        </ul>
+        <div v-if="update" class="btn_update" @click="pushversion">
+            Actualizar
+        </div>
+
     </div>
 </template>
 
@@ -37,6 +41,7 @@ import axios from 'axios'
 import { IP, PUERTO } from '@/config/parametros'
 import { mapState } from 'vuex'
 import { pregunta } from '../functions/alertas'
+import { ipcRenderer } from 'electron'
 
 const $ = require('jquery')
 window.$ = $
@@ -45,7 +50,7 @@ export default {
     name: "Menu",
     data() {
         return {
-           
+           update: false
         }
     },
     computed: {
@@ -63,6 +68,14 @@ export default {
                     this.$router.replace('Login')
                 }
             })
+        },
+        getversion(){
+            ipcRenderer.on('actualizacion', (event, message)=>{
+                this.update = message
+            })
+        },
+        pushversion(){
+            ipcRenderer.send('ok_update')
         }
     },
     mounted() {
@@ -93,6 +106,8 @@ export default {
 
             var accordion = new Accordion($('#accordion'), false);
         });
+
+        this.getversion()
     },
 }
 
@@ -231,4 +246,25 @@ export default {
         background: #b63b4d;
         color: #FFF
     }
+
+    .btn_update{
+        width: 250px;
+        height: 40px;
+        background-color: #0081af; 
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: .4s;
+    }
+        .btn_update:hover{
+            background-color: orangered;
+            font-size: 20px;
+        }
 </style>

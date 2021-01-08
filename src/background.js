@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain, dialog } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, dialog, shell } from 'electron'
 import {
   createProtocol,
   installVueDevtools
@@ -11,6 +11,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+let actualizacion
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -22,17 +23,12 @@ function buscarActualizacion(){
     autoUpdater.checkForUpdates()
     autoUpdater.on('update-downloaded', () => {
      
-      const dialogOpts = {
-        type: 'info',
-        buttons: ['Actualizar', 'Después'],
-        title: 'Actualización disponible',
-        message: `NUEVA VERSION DISPONIBLE`,
-        detail: 'Una nueva versión ha sido descargada. Presiona "Actualizar" para aplicar los cambios.'
-      }
+      setTimeout(()=>{ // ESPERA 10 SEGUNDOS PARA ENVIAR EL MENSAJE DE QUE DEBE SER ACTUALIZADA LA APP
+        win.webContents.send('actualizacion', true)
+      }, 10000)
 
-      dialog.showMessageBox(dialogOpts).then(({ response }) => {
-        if (response === 0) autoUpdater.quitAndInstall()
-      })
+      clearInterval(actualizacion)
+
     })
 }
 
@@ -59,31 +55,10 @@ function createWindow() {
     win.loadURL('app://./index.html')
     //autoUpdater.checkForUpdatesAndNotify()
     //autoUpdater.checkForUpdates()
-    buscarActualizacion()
+    //buscarActualizacion()
   }
 
-  let actualizacion = setInterval(() => {
-    autoUpdater.checkForUpdates()
-    autoUpdater.on('update-downloaded', () => {
-     
-
-      const dialogOpts = {
-        type: 'info',
-        buttons: ['Actualizar', 'Después'],
-        title: 'Actualización disponible',
-        message: `NUEVA VERSION DISPONIBLE`,
-        detail: 'Una nueva versión ha sido descargada. Presiona "Actualizar" para aplicar los cambios.'
-      }
-
-      dialog.showMessageBox(dialogOpts).then(({ response }) => {
-        if (response === 0) {
-          autoUpdater.quitAndInstall()
-        }else{
-          clearInterval(actualizacion)
-        }
-      })
-    })
-  }, 60 * 60 * 1000) // para cambiar el tiempo del intervalo em minutos, modificar solo el primer 60
+  actualizacion = setInterval(buscarActualizacion, 15 * 60 * 1000) // para cambiar el tiempo del intervalo em minutos, modificar solo el primer 60
 
   win.on('closed', () => {
     win = null
@@ -129,11 +104,16 @@ app.on('ready', async () => {
 
 ipcMain.on('app_version', (event)=>{
   event.sender.send('app_version', {version: app.getVersion()})
+  buscarActualizacion()
 })
 
-// ipcMain.on('restart_app', () => {
-//   autoUpdater.quitAndInstall();
-// });
+ipcMain.on('ok_update', (event)=>{
+  autoUpdater.quitAndInstall()
+})
+
+ipcMain.on('vale_salida', (event,args)=>{
+  shell.openExternal(args)
+})
 
 
 // Exit cleanly on request from parent process in development mode.
