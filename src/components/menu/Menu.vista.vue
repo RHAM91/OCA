@@ -28,9 +28,16 @@
                <div class="link" @click="salir"><i class="fas fa-sign-out-alt"></i>Salir</div>
            </li>
        </ul>
-        <div v-if="update" class="btn_update" @click="pushversion">
+        <div v-if="update == false" class="version" id="version" @click="show = !show">
+            <i class="fas fa-code-branch"></i>
+        </div>
+        <div v-else class="btn_update" @click="pushversion">
             Actualizar
         </div>
+
+        <b-popover :show.sync="show" target="version" title="Versión">
+            <strong>{{version}}</strong>
+        </b-popover>
 
     </div>
 </template>
@@ -50,7 +57,9 @@ export default {
     name: "Menu",
     data() {
         return {
-           update: false
+           update: false,
+           show: false,
+           version: ''
         }
     },
     computed: {
@@ -70,6 +79,14 @@ export default {
             })
         },
         getversion(){
+
+             ipcRenderer.send('app_version');
+
+            ipcRenderer.on('app_version', (event, arg) => {
+                ipcRenderer.removeAllListeners('app_version');
+                this.version = arg.version
+            });
+
             ipcRenderer.on('actualizacion', (event, message)=>{
                 this.update = message
             })
@@ -246,6 +263,29 @@ export default {
         background: #b63b4d;
         color: #FFF
     }
+
+    .version{
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: .4s ease;
+        cursor: pointer;
+    }
+        .version:hover{
+            background-color: white;
+            color: black;
+        }
+
+        .version:active{
+            background-color: orange;
+        }
 
     .btn_update{
         width: 250px;

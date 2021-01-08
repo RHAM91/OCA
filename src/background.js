@@ -58,7 +58,7 @@ function createWindow() {
     //buscarActualizacion()
   }
 
-  actualizacion = setInterval(buscarActualizacion, 15 * 60 * 1000) // para cambiar el tiempo del intervalo em minutos, modificar solo el primer 60
+  actualizacion = setInterval(buscarActualizacion, 60 * 60 * 1000) // para cambiar el tiempo del intervalo em minutos, modificar solo el primer 60
 
   win.on('closed', () => {
     win = null
