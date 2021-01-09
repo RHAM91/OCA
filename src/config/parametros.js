@@ -1,4 +1,4 @@
 module.exports = {
-    IP: 'localhost',
-    PUERTO: 3009
+    IP: 'api.kovu.red',
+    PUERTO: 3002
 }
