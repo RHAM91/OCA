@@ -40,7 +40,7 @@
                 </b-col>
                 <b-col sm="12" md="6" class="mt-3">
                     <label>Color</label>
-                    <b-form-input type="text" id="codeTransfer" v-model="codeTransfer" size="sm" required="required" placeholder="F2 para buscar" @keydown.113="setearModal" autocomplete="off"></b-form-input>
+                    <b-form-input type="text" id="codeTransfer" v-model="codeTransfer" size="sm" placeholder="F2 para buscar" @keydown.113="setearModal" autocomplete="off"></b-form-input>
                 </b-col>
                 <b-col sm="12" md="6" class="mt-3">
                     <label>Operador</label>

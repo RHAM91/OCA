@@ -47,22 +47,22 @@
 
                     <b-col sm="12" md="4" class="mt-3">
                         <label>Teléfono</label>
-                        <b-form-input type="text" v-model="telefono" size="sm" required="" placeholder="+502"></b-form-input>
+                        <b-form-input type="text" v-model="telefono" size="sm"  placeholder="+502"></b-form-input>
                     </b-col>
 
                     <b-col sm="12" md="4" class="mt-3">
                         <label>Correo</label>
-                        <b-form-input type="text" v-model="correo" size="sm" required="" placeholder="@"></b-form-input>
+                        <b-form-input type="text" v-model="correo" size="sm"  placeholder="@"></b-form-input>
                     </b-col>
 
                     <b-col sm="12" md="4" class="mt-3">
                         <label>Nit</label>
-                        <b-form-input type="text" v-model="nit" size="sm" required=""></b-form-input>
+                        <b-form-input type="text" v-model="nit" size="sm"></b-form-input>
                     </b-col>
 
                     <b-col sm="12" class="mt-3">
                         <label>Facebook</label>
-                        <b-form-input type="text" v-model="facebook" size="sm" required="" placeholder="FB"></b-form-input>
+                        <b-form-input type="text" v-model="facebook" size="sm"  placeholder="FB"></b-form-input>
                     </b-col>
 
                     <b-col sm="12" class="mt-3">
@@ -89,7 +89,7 @@
 
                         <b-col sm="12" class="mt-3">
                         <label>Otras instituciones</label>
-                        <b-form-input type="text" v-model="otrasInstituciones" size="sm" required=""></b-form-input>
+                        <b-form-input type="text" v-model="otrasInstituciones" size="sm" ></b-form-input>
                     </b-col>
 
                         <b-col sm="12" md="6" class="mt-3">
@@ -102,7 +102,7 @@
 
                         <b-col sm="12" md="6" class="mt-3">
                         <label>Cancela consulta</label>
-                        <b-form-input type="number" step="0.01" v-model="cancela" size="sm" required="" placeholder="Q."></b-form-input>
+                        <b-form-input type="number" step="0.01" v-model="cancela" size="sm" placeholder="Q."></b-form-input>
                     </b-col>
 
                         <b-col sm="12" class="mt-3">
@@ -115,7 +115,7 @@
 
                         <b-col sm="12" class="mt-3">
                         <label>Referido por</label>
-                        <b-form-input type="text" v-model="referido" size="sm" required=""></b-form-input>
+                        <b-form-input type="text" v-model="referido" size="sm"></b-form-input>
                     </b-col>
 
                         <b-col sm="12" class="mt-3">
@@ -138,37 +138,37 @@
 
                         <b-col sm="12" md="6" class="mt-3">
                         <label>Primera cita</label>
-                        <b-form-input type="date" v-model="primeraCita" size="sm" required=""></b-form-input>
+                        <b-form-input type="date" v-model="primeraCita" size="sm" </b-form-input>
                     </b-col>
 
                         <b-col sm="12" md="6" class="mt-3">
                         <label>Atendido por</label>
-                        <b-form-input type="text" v-model="atendidoPor" size="sm" required=""></b-form-input>
+                        <b-form-input type="text" v-model="atendidoPor" size="sm"></b-form-input>
                     </b-col>
 
                         <b-col sm="12" md="6" class="mt-3">
                         <label>Fecha de medidas</label>
-                        <b-form-input type="date" v-model="fechaDeMedidas" size="sm" required=""></b-form-input>
+                        <b-form-input type="date" v-model="fechaDeMedidas" size="sm"></b-form-input>
                     </b-col>
 
                         <b-col sm="12" md="6" class="mt-3">
                         <label>Efectuadas por</label>
-                        <b-form-input type="text" v-model="efectuadasPor" size="sm" required=""></b-form-input>
+                        <b-form-input type="text" v-model="efectuadasPor" size="sm"></b-form-input>
                     </b-col>
 
                     <b-col sm="12" md="4" class="mt-3">
                         <label>Fecha de pruebas 1</label>
-                        <b-form-input type="date" v-model="fechaPruebas1" size="sm" required=""></b-form-input>
+                        <b-form-input type="date" v-model="fechaPruebas1" size="sm"></b-form-input>
                     </b-col>
 
                     <b-col sm="12" md="4" class="mt-3">
                         <label>Fecha de pruebas 2</label>
-                        <b-form-input type="date" v-model="fechaPruebas2" size="sm" required=""></b-form-input>
+                        <b-form-input type="date" v-model="fechaPruebas2" size="sm"></b-form-input>
                     </b-col>
 
                     <b-col sm="12" md="4" class="mt-3">
                         <label>Fecha de pruebas 3</label>
-                        <b-form-input type="date" v-model="fechaPruebas3" size="sm" required=""></b-form-input>
+                        <b-form-input type="date" v-model="fechaPruebas3" size="sm"></b-form-input>
                     </b-col>
 
                     <!-- <b-col sm="12" class="mt-3">
