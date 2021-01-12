@@ -484,7 +484,7 @@ export default {
             
             const documentopdf = await axios.post(`http://${IP}:${PUERTO}/api/reportes`, data, this.$store.state.token)
 
-            await ipcRenderer.send('romario', `http://${IP}:${PUERTO}/pdf/${documentopdf.data.message}`)
+            await ipcRenderer.send('vale_salida', `http://${IP}:${PUERTO}/pdf/${documentopdf.data.message}`)
 
 
         },
