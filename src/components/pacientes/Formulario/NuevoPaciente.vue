@@ -123,6 +123,7 @@
                         <select class="form-control form-control-sm" v-model="tipoDeTrabajo">
                             <option value="">Selecciona</option>
                             <option value="ortesis">Ortesis</option>
+                            <option value="protesis">Prótesis</option>
                         </select>
                     </b-col>
 
@@ -138,7 +139,7 @@
 
                         <b-col sm="12" md="6" class="mt-3">
                         <label>Primera cita</label>
-                        <b-form-input type="date" v-model="primeraCita" size="sm" </b-form-input>
+                        <b-form-input type="date" v-model="primeraCita" size="sm"></b-form-input>
                     </b-col>
 
                         <b-col sm="12" md="6" class="mt-3">
