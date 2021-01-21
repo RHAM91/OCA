@@ -300,7 +300,18 @@ export default new Vuex.Store({
     filteredPacienteNoCli (state){
         if(state.filterPacientes.nocliente.length > 2){
             
-            return state.pacientes.filter(paciente => filtrar_acentos(paciente.nombre.toLowerCase()).includes(state.filterPacientes.nocliente) && paciente.cliente == false)
+            // return state.pacientes.filter(paciente => filtrar_acentos(paciente.nombre.toLowerCase()).includes(state.filterPacientes.nocliente) && paciente.cliente == false)
+
+
+            var parametro = state.filterPacientes.nocliente
+            var x = parametro.split(' ')
+            var regex = "^(?=.*\\b" + x.join("\\b)(?=.*\\b") + "\\b)"
+
+            var filtro = state.pacientes.filter(n => filtrar_acentos(n.nombre.toLowerCase()).match(regex) && n.cliente == false)
+
+            return filtro
+
+
         }else{
 
             return state.pacientes.filter(paciente =>  paciente.cliente == false)
@@ -309,16 +320,37 @@ export default new Vuex.Store({
     filteredPacientew (state){
 
         if(state.filterPacientes.query.length > 2){
-            return state.pacientes.filter(paciente => filtrar_acentos(paciente.nombre.toLowerCase()).includes(state.filterPacientes.query))
+            // return state.pacientes.filter(paciente => filtrar_acentos(paciente.nombre.toLowerCase()).includes(state.filterPacientes.query))
+
+            var parametro = state.filterPacientes.query
+            var x = parametro.split(' ')
+            var regex = "^(?=.*\\b" + x.join("\\b)(?=.*\\b") + "\\b)"
+
+            var filtro = state.pacientes.filter(n => filtrar_acentos(n.nombre.toLowerCase()).match(regex))
+
+            return filtro
+
         }
+
     },
     filterODTs (state){
 
         if(state.filterPacientes.filter_odts.length > 2){
-            return state.odts.filter(odt => filtrar_acentos(odt.nombre.toLowerCase()).includes(state.filterPacientes.filter_odts) || filtrar_acentos(odt.descripcion.toLowerCase()).includes(state.filterPacientes.filter_odts) || filtrar_acentos(odt.departamento.toLowerCase()).includes(state.filterPacientes.filter_odts) || filtrar_acentos(odt.etapa.toLowerCase()).includes(state.filterPacientes.filter_odts))
+
+
+            var parametro = state.filterPacientes.filter_odts
+            var x = parametro.split(' ')
+            var regex = "^(?=.*\\b" + x.join("\\b)(?=.*\\b") + "\\b)"
+
+            var filtro = state.odts.filter(odt => filtrar_acentos(odt.nombre.toLowerCase()).match(regex) || filtrar_acentos(odt.descripcion.toLowerCase()).match(regex) || filtrar_acentos(odt.departamento.toLowerCase()).match(regex) || filtrar_acentos(odt.etapa.toLowerCase()).match(regex) || filtrar_acentos(odt.nombre.toLowerCase()).match(regex))
+
+            return filtro
+
+        }else{
+
+            return state.odts
         }
 
-        return state.odts
     }
   },
   plugins: [vuexPersist.plugin],
