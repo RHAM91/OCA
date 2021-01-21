@@ -283,22 +283,12 @@ export default new Vuex.Store({
     filteredPaciente (state){
         if(state.filterPacientes.query.length > 2){
 
-            // let criterio = state.filterPacientes.query
-            // let x = criterio.split(' ')
-            // var regex = new RegExp("^(?=.*\\b" + x.join("\\b)(?=.*\\b") + "\\b)") 
-
-            
-            // return state.pacientes.filter(paciente => filtrar_acentos(paciente.nombre.toLowerCase()).includes(state.filterPacientes.query) && paciente.cliente == true)
-
-            //@TODO: probar poner el filtro de acentos al parametro
-
             var parametro = state.filterPacientes.query
             var x = parametro.split(' ')
             var regex = "^(?=.*\\b" + x.join("\\b)(?=.*\\b") + "\\b)"
 
-            var filtro = state.pacientes.filter(n => n.nombre.toLowerCase().match(regex) )
-            //let filtro = state.pacientes.filter(n => filtrar_acentos(n.nombre.match(regex)))
-            //console.log(filtro)
+            var filtro = state.pacientes.filter(n => filtrar_acentos(n.nombre.toLowerCase()).match(regex) && n.cliente == true)
+            
             return filtro
 
 
