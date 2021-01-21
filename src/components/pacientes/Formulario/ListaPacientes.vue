@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 import FichaPaciente from '@/components/pacientes/Formulario/ModalFichaPaciente.vue'
 import { pregunta } from '@/components/functions/alertas'
 
@@ -61,7 +61,8 @@ export default {
                 return this.$store.state.filterPacientes.query
             },
             set(val){
-                this.$store.commit('set_querypaciente', val.toLowerCase())
+                // this.$store.commit('set_querypaciente', val.toLowerCase())
+                this.set_querypaciente(val.toLowerCase())
             }
         },
         rows(){
@@ -76,7 +77,7 @@ export default {
             idPaciente: '',
             modalPacientes: false,
             perPage: 15,
-			currentPage: 1,
+            currentPage: 1,
             fields: [
                 {
                     key: 'nombre',
@@ -123,7 +124,11 @@ export default {
                 }
             })
         },
-        ...mapActions(['deleteData', 'wse'])
+        // buscar(){
+        //     this.set_querypaciente(this.search)
+        // },
+        ...mapActions(['deleteData', 'wse']),
+        ...mapMutations(['set_querypaciente'])
     },
     mounted() {
         document.getElementById('clie').focus()
