@@ -1,6 +1,6 @@
 {
   "name": "OCA",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,7 +9,9 @@
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
-    "deploy:win": "vue-cli-service electron:build -p always -w"
+    "deploy": "vue-cli-service electron:build -p always -w",
+    "build:win": "vue-cli-service electron:build --windows",
+    "build:mac": "vue-cli-service electron:build --mac"
   },
   "main": "background.js",
   "dependencies": {
@@ -24,6 +26,7 @@
     "sweetalert2": "^10.12.5",
     "vue": "^2.6.12",
     "vue-crono": "^2.0.9",
+    "vue-online-2": "^2.2.0",
     "vue-router": "^3.4.3",
     "vuex": "^3.5.1",
     "vuex-persist": "^2.2.0"

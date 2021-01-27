@@ -36,6 +36,7 @@
         </div>
 
         <Loading />
+        <Ghost :conexion="online" />
 
     </div>
 </template>
@@ -57,6 +58,7 @@ import ConfigODT from '@/components/ordendetrabajo/configuracion/Tabs.vue'
 //--> GIF ANIMADO PARA LAS DESCARGAS
 
 import Loading from '@/components/varios/Loading.vue'
+import Ghost from '@/components/varios/Offline.vue'
 
 // MODULO PRINCIPAL
 
@@ -65,6 +67,7 @@ import Menu from '@/components/menu/Menu.vista.vue'
 import axios from 'axios'
 import { IP, PUERTO } from '../config/parametros'
 import { mapActions } from 'vuex'
+import { VueOnline } from 'vue-online-2'
 
 export default {
     name: 'Main',
@@ -76,7 +79,13 @@ export default {
         NuevaODT,
         ConfigODT,
 
-        Loading
+        Loading,
+        Ghost
+    },
+    computed:{
+        online(){
+            return VueOnline.isOnline
+        }
     },
     data(){
         return{
@@ -128,14 +137,25 @@ export default {
                 }
             }
         },
+        inciando_conexion(){
+            const { socket } = require('../config/sockets_config')
+            this.ws(socket)
+
+            // socket.on('reconnect', ()=>{
+            //     console.log('De nuevo en linea')
+            // })
+
+            // socket.on('disconnect', (reason) =>{
+            //     console.log(`Puerto desconectado razòn: ${reason}`)
+            // })
+        },
         ...mapActions(['ws'])
          
     },
     mounted() {
         // CONEXION CON EL SERVIDOR PUSH PARA ESCUCHAR ACTUALIZACIONES
 
-        const { socket } = require('../config/sockets_config')
-        this.ws(socket)
+        this.inciando_conexion()
 
         // TERMINA FUNCION -->
 
@@ -165,6 +185,16 @@ export default {
     cron:{
         time: 120000,
         method: 'consulta'
+    },
+    watch:{
+        online(estado){
+            if (estado) {
+                // console.log('online')
+                this.inciando_conexion()
+            }else{
+                // console.log('offline')
+            }
+        }
     }
 }
 
