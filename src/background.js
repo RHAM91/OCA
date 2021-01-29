@@ -6,6 +6,8 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
 import { autoUpdater } from 'electron-updater'
+import fs from 'fs'
+import axios from 'axios'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -114,6 +116,27 @@ ipcMain.on('ok_update', (event)=>{
 ipcMain.on('vale_salida', (event,args)=>{
   shell.openExternal(args)
 })
+
+let offline_detect = async () =>{
+  try {
+    let info = await axios.get('https://google.com/favicon.ico')
+
+    if (info.status == 200) {
+      //console.log(info.status)
+      win.webContents.send('onLine', true)
+    }
+  } catch (e) {
+    if (e.code == 'ENOTFOUND') {
+      //console.log(e.code)
+      win.webContents.send('onLine', false)
+    }
+  }
+
+}
+
+setInterval(() => {
+  offline_detect()
+}, 5000);
 
 
 // Exit cleanly on request from parent process in development mode.
