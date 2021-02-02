@@ -3,7 +3,10 @@
         
         <div class="cnt">
             <div class="barraTop">
-                Ficha de paciente
+                <div>
+                    Ficha de paciente
+                </div>
+                <b-button type="button" size="sm" variant="outline-danger" @click="cerrar">Cerrar</b-button>
             </div>
             <div class="cuerpo_modal_ficha_paciente">
                 <div class="foto_paciente">
@@ -667,8 +670,10 @@ export default {
             width: 100%;
             height: 40px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
             padding-left: 10px;
+            padding-right: 10px;
             font-size: 20px;
         }
 

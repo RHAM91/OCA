@@ -2,10 +2,10 @@
     <div class="contenedorbp">
         <div class="box_bp">
             <div class="barra_bp">
-                <div class="muesca">
-
+                <div>
+                    Buscar paciente
                 </div>
-                Buscar paciente
+                <b-button type="button" size="sm" variant="outline-danger" @click="cerrar">Cerrar</b-button>
             </div>
             <div class="cuerpo_bp">
                 <b-container>
@@ -145,7 +145,10 @@ export default {
                 border-bottom: 1px solid #edebe9;
                 font-size: 18px;
                 display: flex;
+                justify-content: space-between;
                 align-items: center;
+                padding-right: 10px;
+                padding-left: 10px;
             }
 
             .cuerpo_bp{

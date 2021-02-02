@@ -2,7 +2,10 @@
     <div class="contenedor_AM">
         <div class="formulario">
             <div class="mrmTitulo">
-                Actualiza registro
+                <div>
+                    Actualiza registro
+                </div>
+                <b-button type="button" size="sm" variant="outline-danger" @click="cerrar">Cerrar</b-button>
             </div>
             <div class="b-formulario">
                 <b-container fluid>
@@ -124,13 +127,14 @@ export default {
             .mrmTitulo{
                 width: 100%;
                 height: 40px;
-                background-color: orangered;
-                color: white;
+                color: black;
                 /* font-weight: bold; */
                 font-size: 20px;
                 display: flex;
+                justify-content: space-between;
                 align-items: center;
                 padding-left: 10px;
+                padding-right: 10px;
             }
 
             .b-formulario{

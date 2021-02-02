@@ -2,7 +2,10 @@
     <div class="contenedor_add_formula">
         <div class="formulario_formula">
             <div class="barra_formula">
-                Fórmulas
+                <div>
+                    Fórmulas
+                </div>
+                <b-button type="button" size="sm" variant="outline-danger" @click="cerrar">Cerrar</b-button>
             </div>
             <div class="cuerpo_formula">
                 <b-container fluid>
@@ -206,8 +209,10 @@ export default {
             border-bottom: 1px solid #edebe9;
             font-size: 19px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
             padding-left: 10px;
+            padding-right: 10px;
         }
 
         .cuerpo_formula{

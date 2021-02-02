@@ -8,6 +8,9 @@
                 <div v-else style="margin-left: 10px;">
                     <i class="fas fa-file-alt" style="margin-right: 10px;"></i> ODT {{odtx}}
                 </div>
+                <div class="boton_cerrar_dodt">
+                    <b-button type="button" size="sm" variant="warning" @click="cerrar">Cerrar</b-button>
+                </div>
             </div>
             <div class="box_detalle_odt">
                 <b-container fluid>
@@ -682,6 +685,12 @@ export default {
             transform: rotate(-90deg);
         }
 
+        .boton_cerrar_dodt{
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 999;
+        }
 
         .menu_btns{
             position: absolute;
