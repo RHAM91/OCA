@@ -197,7 +197,21 @@ export default {
             // hago la lista de botones segun el aparato que se seleccionó
 
             const botones = this.formulas.filter(formula => formula.IDAparato.includes(this.seleccion))
-            this.nBotones = botones
+
+            if (this.seleccion == '5f342b529c0e4259d2f7e1dd') {
+
+                this.nBotones = []
+
+                let nuevo_orden = [5, 7, 4, 6, 3, 1, 8, 0, 2, 9]
+                for (let i = 0; i < nuevo_orden.length; i++) {
+                    const e = nuevo_orden[i];
+
+                    this.nBotones.push(botones[e])
+                }
+            }else{
+
+                this.nBotones = botones
+            }
 
         },
         mostrarElementos(id){

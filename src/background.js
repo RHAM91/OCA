@@ -8,6 +8,7 @@ import {
 import { autoUpdater } from 'electron-updater'
 import fs from 'fs'
 import axios from 'axios'
+import os from 'os'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -108,6 +109,22 @@ ipcMain.on('app_version', (event)=>{
   event.sender.send('app_version', {version: app.getVersion()})
   buscarActualizacion()
 })
+
+// --> EVENTO PARA BUSCAR Y MOSTRAR DATOS DE EQUIPO
+
+ipcMain.on('app_info', (event)=>{
+
+  let info = {
+    nombre: os.hostname(),
+    empresa: 'OCA',
+    programa: 'Sistema pacientes',
+    version: app.getVersion(),
+    ip: '127.0.0.1'
+  }
+
+  event.sender.send('app_info', info) // ENVIA LA VERSION DEL SOFWARE
+})
+
 
 ipcMain.on('ok_update', (event)=>{
   autoUpdater.quitAndInstall()
