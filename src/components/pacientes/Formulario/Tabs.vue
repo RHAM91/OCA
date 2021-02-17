@@ -22,7 +22,7 @@
                     <b-col sm="12">
                         <b-tabs content-class="mt-3">
                             <b-tab v-if="permisos.pacientes.listar" title="Registro de pacientes Nuevo" @click="setSubModulo('listadosinodt')" active></b-tab>
-                            <b-tab v-if="permisos.pacientes.listar" title="Clientes" @click="setSubModulo('listado')"></b-tab>
+                            <b-tab v-if="permisos.pacientes.listar" title="Pacientes" @click="setSubModulo('listado')"></b-tab>
                             <b-tab v-if="permisos.pacientes.crear" title="Crear expediente" @click="setSubModulo('newpaciente')"></b-tab>
                             <!-- <b-tab title="Bloqueados" @click="setSubModulo('Bloqueados')"></b-tab> -->
                         </b-tabs>

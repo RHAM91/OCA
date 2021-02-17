@@ -15,9 +15,10 @@
 
                 <b-table class="table-bordered table-striped" :items="spacientes" :fields="fields" :per-page="perPage" :current-page="currentPage" small style="font-size: 13px;">
 					<template v-slot:cell(btn) = 'row'>
-                        <div style="display: flex; justify-content:center;">
+                        <div style="display: flex;text-align: center;">
                             <b-button type="button" size="sm" class="btn-spaces" title="Ficha paciente" variant="warning" @click="modalFichaPaciente(row.item._id)"><i class="fas fa-info-circle"></i></b-button>
                             <b-button v-if="permisos.pacientes.borrar" type="button" size="sm" class="btn-spaces" title="Ficha paciente" variant="danger" @click="removerPaciente(row.item._id)"><i class="fas fa-minus-square"></i></b-button>
+                            <b-button type="button" size="sm" class="btn-spaces" title="Reconsulta" variant="info" @click="abrirModalReconsulta(row.item._id)"><i class="fas fa-sync"></i></b-button>
                         </div>
                         
 					</template>
@@ -38,6 +39,7 @@
 
 
         <FichaPaciente v-if="modalPacientes" :IDEpaciente="idPaciente" v-on:cmodalfichapaciente="cerrarModalPacientes" />
+        <Reconsulta v-if="modalReconsulta" :idx="idPaciente" v-on:cerrar_modal="cerrar_modal_reconsulta" />
 
 
     </b-container>
@@ -46,13 +48,15 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import FichaPaciente from '@/components/pacientes/Formulario/ModalFichaPaciente.vue'
+import Reconsulta from './ModalReconsulta.vue'
 import { pregunta } from '@/components/functions/alertas'
 
 
 export default {
     name: 'ListaPacientes',
     components:{
-        FichaPaciente
+        FichaPaciente,
+        Reconsulta
     },
     computed: {
         ...mapState(['permisos']),
@@ -75,6 +79,7 @@ export default {
         return {
             idPaciente: '',
             modalPacientes: false,
+            modalReconsulta: false,
             perPage: 15,
             currentPage: 1,
             fields: [
@@ -92,7 +97,7 @@ export default {
                 },
                 {
                     key: 'btn',
-                    thStyle: 'width: 13%;'
+                    thStyle: 'width: 13%;text-align: center;'
                 }
             ]
 
@@ -105,6 +110,13 @@ export default {
         modalFichaPaciente(id){
             this.idPaciente = id
             this.modalPacientes = true
+        },
+        abrirModalReconsulta(id){
+            this.modalReconsulta = true
+            this.idPaciente = id
+        },
+        cerrar_modal_reconsulta(){
+            this.modalReconsulta = false
         },
         async removerPaciente(id){
 

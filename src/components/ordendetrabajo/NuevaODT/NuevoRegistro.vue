@@ -2,10 +2,10 @@
     <b-container fluid style="max-width: 1100px;">
         <form @submit.prevent="guardarODT">
             <b-row>
-                <b-col sm="12" md="2" class="mt-3">
+                <b-col v-if="!remoto" sm="12" md="2" class="mt-3">
                     <b-button type="button" size="sm" variant="info" block @click="BuscarPacienteModal">Buscar paciente</b-button>
                 </b-col>
-                <b-col sm="12" md="10"  class="mt-3">
+                <b-col sm="12" :md="!remoto ? '10' : '12'"  class="mt-3">
                     <table class="table table-sm table-bordered table-descripcion">
                         <tr>
                             <td>
@@ -87,6 +87,8 @@
         <ElegirTransfer v-if="modalTransfer" v-on:cerrar_transfer="setearModal" v-on:transfer_seleccionado="set_transfer"/>
         <SeleccionaElemento v-if="modalElementos" :el="setElemento" v-on:cModalSetElemento="closeModal" v-on:opciones="setOptions" />
 
+        
+
     </b-container>
 </template>
 
@@ -105,8 +107,9 @@ export default {
         SeleccionaElemento
     },
     computed: {
-        ...mapState(['operarios', 'departamentos', 'aparatos', 'formulas'])
+        ...mapState(['operarios', 'departamentos', 'aparatos', 'formulas', 'pacientes'])
     },
+    props:['remoto', 'info_paciente'],
     data() {
         return {
             seleccion: '',
@@ -233,7 +236,21 @@ export default {
             this.codeTransfer = transfer
             document.getElementById('codeTransfer').focus()
         },
+        set_info(){
+            const pacientex = this.pacientes.filter(paciente => paciente._id == this.info_paciente)
+
+            this.nombrePaciente = pacientex[0].nombre
+            this.genero = pacientex[0].genero
+            this.edad = moment(Date.now()).format('YYYY') - moment(pacientex[0].fechaNacimiento).format('YYYY')
+            this.PID = this.info_paciente
+        
+        },
         ...mapActions(['wse', 'insert_data'])
+    },
+    mounted() {
+        if (this.remoto) {
+            this.set_info()
+        }
     },
 }
 </script>

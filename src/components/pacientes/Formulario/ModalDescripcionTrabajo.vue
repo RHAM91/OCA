@@ -3,14 +3,14 @@
         <div class="cuerpo-descripcion">
             <div class="cabecera_decripcion">
                 <div v-if="!o_completas">
-                    Historial de ordenes:
+                    Ordenes en tránsito (activas):
                 </div>
                 <div v-if="o_completas">
-                    Ordenes completas:
+                    Ordenes completas (cerradas):
                 </div>
                 <div>
-                    <b-button v-if="!o_completas" type="button" size="sm" variant="outline-primary" @click="completas" style="margin-right: 10px;">Completas</b-button>
-                    <b-button v-if="o_completas" type="button" size="sm" variant="outline-danger" @click="transito" style="margin-right: 10px;">Transito</b-button>
+                    <b-button v-if="!o_completas" type="button" size="sm" variant="outline-primary" @click="completas" style="margin-right: 10px;">Ver ordenes completas</b-button>
+                    <b-button v-if="o_completas" type="button" size="sm" variant="outline-danger" @click="transito" style="margin-right: 10px;">Ver ordenes en transito</b-button>
                     <b-button type="button" size="sm" variant="light" @click="cerrar">Cerrar</b-button>
                 </div>
             </div>
