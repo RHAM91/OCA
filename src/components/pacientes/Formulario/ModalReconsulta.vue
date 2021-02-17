@@ -60,10 +60,10 @@
                         </b-col>
                         <b-col sm="10" class="mt-3">
                             <label>Consto de la consulta</label>
-                            <b-form-input type="number" step="0.01" placeholder="Q" size="sm"></b-form-input>
+                            <b-form-input type="number" step="0.01" v-model="costo" placeholder="Q" size="sm"></b-form-input>
                         </b-col>
                         <b-col sm="2" class="mt-5 d-flex flex-row-reverse">
-                            <b-button type="button" block size="sm" variant="primary">Grabar</b-button>
+                            <b-button type="button" block size="sm" variant="primary" @click="guardarDatos">Grabar</b-button>
                         </b-col>
                         <b-col sm="12" class="mt-5" style="text-align: center;">
                             <b-button type="button" size="sm" variant="primary" style="margin-right: 15px;" @click="abrirHistorial">Ver reconsultas</b-button>
@@ -81,9 +81,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import Historial from './HistorialReconsultas.vue'
 import ModalGenerarODTx from './ModalGenerarODT_1.vue'
+import moment from 'moment'
 
 export default {
     name: 'Reconsulta',
@@ -99,9 +100,11 @@ export default {
         return {
             nombre: '',
             descripcion: '',
+            codigo_paciente: '',
             historial: false,
             ModalGenerarODT: false,
-            info_paciente: ''
+            info_paciente: '',
+            costo: ''
         }
     },
     methods: {
@@ -124,6 +127,27 @@ export default {
         cerarGenerarODT(){
             this.ModalGenerarODT = false
         },
+        async guardarDatos(){
+
+            let info = {
+                api: 'reconsultas',
+                formulario: {
+                    codigo: '111111',
+                    nombre: this.nombre,
+                    fecha: moment(Date.now()).format('YYYY-MM-DD'),
+                    consulta: this.descripcion,
+                    costo: this.costo,
+                    idp: this.idx
+                }
+            }
+
+            await this.insert_data(info)
+
+            this.descripcion = ''
+            this.costo = ''
+
+        },
+        ...mapActions(['insert_data'])
     },
     mounted() {
         this.getDatos()

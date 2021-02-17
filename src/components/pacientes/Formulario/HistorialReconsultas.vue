@@ -14,10 +14,10 @@
                             <table class="table table-sm table-striped table-bordered" style="font-size: 14px;">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: center;width: 15%;">
+                                        <th style="width: 15%;">
                                             Código
                                         </th>
-                                        <th style="text-align: center;width: 55%;">
+                                        <th style="width: 55%;">
                                             Consulta
                                         </th>
                                         <th style="text-align: center;width: 15%;">
@@ -29,18 +29,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr v-for="(item, index) in reconsultas" :key="index">
                                         <td>
-
+                                            {{item.codigo}}
                                         </td>
                                         <td>
-
+                                            {{item.consulta}}
                                         </td>
-                                        <td>
-
+                                        <td style="text-align:center;">
+                                            Q{{item.costo}}
                                         </td>
-                                        <td>
-                                            
+                                        <td style="text-align: center;">
+                                            {{item.fecha}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -55,17 +55,30 @@
 </template>
 
 <script>
+
+import { IP, PUERTO } from '@/config/parametros'
+import axios from 'axios'
+
+
 export default {
     name: "HistorialReconsultas",
+    props: ['id'],
     data() {
         return {
-            
+            reconsultas: []
         }
     },
     methods: {
         salir(){
             this.$emit('cerrar_modal', false)
+        },
+        async getDatos(){
+            let info = await axios.get(`http://${IP}:${PUERTO}/api/reconsultas/${this.id}`, this.$store.state.token)
+            this.reconsultas = info.data
         }
+    },
+    mounted() {
+        this.getDatos()
     },
 }
 </script>
